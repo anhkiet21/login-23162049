@@ -11,8 +11,7 @@ public class user implements Serializable {
     public user() {
     	
     }
-    public user(int id,String username, String password, String email) {
-    	this.id=id;
+    public user(String username, String password, String email) {
     	this.email=email;
     	this.password=password;
     	this.username=username;

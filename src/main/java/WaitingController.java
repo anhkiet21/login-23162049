@@ -8,20 +8,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/waiting")
 public class WaitingController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if (session != null && session.getAttribute("account") != null) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
+        HttpSession session = req.getSession(false); // false để không tự tạo session mới
+
+        if (session != null && session.getAttribute("account") != null) {
             user u = (user) session.getAttribute("account");
             req.setAttribute("username", u.getUsername());
 
-            resp.sendRedirect(req.getContextPath() + "/home");
+            
+            req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login");
+            
+            resp.sendRedirect(req.getContextPath() + "/views/login.jsp");
         }
     }
 }
